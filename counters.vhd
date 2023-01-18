@@ -44,6 +44,8 @@ package counters is
    -- Set returns counter c with value set to x.
    -- It fails if x value is not in range.
    function set(c : counter_t; x : integer) return counter_t;
+   -- To_string converts counter c to string.
+   function to_string(c : counter_t) return string;
 
 end package;
 
@@ -172,6 +174,11 @@ package body counters is
       end if;
       r.val := x;
       return r;
+   end function;
+
+   function to_string(c : counter_t) return string is
+   begin
+      return "(val => " & integer'image(c.val) &", min => " & integer'image(c.min) & ", max => " & integer'image(c.max) & ")";
    end function;
 
 end package body;

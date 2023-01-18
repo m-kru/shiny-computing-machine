@@ -200,4 +200,14 @@ begin
       wait;
    end process;
 
+
+   test_to_strig : process is
+      variable c1 : counter_t := init(255);
+      variable c2 : counter_t := init(1023, 151, -127);
+   begin
+      report to_string(c1);
+      report to_string(c2);
+      wait;
+   end process;
+
 end architecture;
