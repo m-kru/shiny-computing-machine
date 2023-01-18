@@ -1,3 +1,7 @@
+-- SPDX-License-Identifier: MIT
+-- https://github.com/m-kru/vhdl-counters
+-- Copyright (c) 2023 Michał Kruszewski
+
 package counters is
 
    -- Counter_t is a classic wrap around counter.
