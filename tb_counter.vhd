@@ -139,6 +139,22 @@ begin
    end process;
 
 
+   test_rst_min_if : process is
+      constant MAX : integer := 15;
+      constant MIN : integer := 7;
+      variable c : counter_t := init(MAX, MAX, MIN);
+   begin
+      assert not is_min(c);
+      c := rst_min_if(c, true);
+      assert is_min(c);
+      c := inc(c);
+      assert not is_min(c);
+      c := rst_min_if(c, true);
+      assert is_min(c);
+      wait;
+   end process;
+
+
    test_rst_max : process is
       constant MAX : integer := 15;
       constant MIN : integer := 7;
@@ -152,6 +168,21 @@ begin
       wait;
    end process;
 
+
+   test_rst_max_if : process is
+      constant MAX : integer := 15;
+      constant MIN : integer := 7;
+      variable c : counter_t := init(MAX, MIN, MIN);
+   begin
+      assert not is_max(c);
+      c := rst_max_if(c, true);
+      assert is_max(c);
+      c := inc(c);
+      assert not is_max(c);
+      c := rst_max_if(c, true);
+      assert is_max(c);
+      wait;
+   end process;
 
    test_set : process is
       constant MAX : integer := 15;

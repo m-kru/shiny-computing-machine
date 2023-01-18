@@ -33,8 +33,14 @@ package counters is
    function inc_if(c : counter_t; cond : boolean; i : natural := 1) return counter_t;
    -- Rst_min returns counter c reset to its min value.
    function rst_min(c : counter_t) return counter_t;
+   -- Rst_min_if returns counter c reset to its min value if the condition cond is met.
+   -- Otherwise it returns counter c.
+   function rst_min_if(c : counter_t; cond : boolean) return counter_t;
    -- Rst_max returns counter c reset to its max value.
    function rst_max(c : counter_t) return counter_t;
+   -- Rst_max_if returns counter c reset to its max value if the condition cond is met.
+   -- Otherwise it returns counter c.
+   function rst_max_if(c : counter_t; cond : boolean) return counter_t;
    -- Set returns counter c with value set to x.
    -- It fails if x value is not in range.
    function set(c : counter_t; x : integer) return counter_t;
@@ -134,11 +140,27 @@ package body counters is
       return r;
    end function;
 
+   function rst_min_if(c : counter_t; cond : boolean) return counter_t is
+   begin
+      if cond then
+         return rst_min(c);
+      end if;
+      return c;
+   end function;
+
    function rst_max(c : counter_t) return counter_t is
       variable r : counter_t := c;
    begin
       r.val := r.max;
       return r;
+   end function;
+
+   function rst_max_if(c : counter_t; cond : boolean) return counter_t is
+   begin
+      if cond then
+         return rst_max(c);
+      end if;
+      return c;
    end function;
 
    function set(c : counter_t; x : integer) return counter_t is
