@@ -15,7 +15,7 @@ package counters is
 
    function init(max : integer; init_val : integer := 0; min : integer := 0) return counter_t;
    -- Init_width initializes a counter based on its width assuming the min value of the counter is 0.
-   -- Max determines whetehr the init value shall equal max (max = true) or min (max = false).
+   -- Max determines whether the init value shall equal max (max = true) or min (max = false).
    function init_width(width : positive; max : boolean := false) return counter_t;
    -- Equal returns true if counter c value equals x.
    function equal(c : counter_t; x : integer) return boolean;
