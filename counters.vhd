@@ -13,6 +13,7 @@ package counters is
       val : integer;
    end record;
 
+
    function init(max : integer; init_val : integer := 0; min : integer := 0) return counter_t;
    -- Init_width initializes a counter based on its width assuming the min value of the counter is 0.
    -- Max determines whether the init value shall equal max (max = true) or min (max = false).
@@ -47,9 +48,24 @@ package counters is
    -- To_string converts counter c to string.
    function to_string(c : counter_t) return string;
 
+
+   -- Saturated_counter_t is a counter with saturated arithmetic.
+   -- It doesn't wrap around when incremented at max value or decremented at min value.
+   -- Its range is limited by the range of the integer type.
+   type saturated_counter_t is record
+      min : integer;
+      max : integer;
+      val : integer;
+   end record;
+   function init(max : integer; init_val : integer := 0; min : integer := 0) return saturated_counter_t;
+
 end package;
 
 package body counters is
+
+   ----------------------
+   -- Counter_t functions
+   ----------------------
 
    function init(max : integer; init_val : integer := 0; min : integer := 0) return counter_t is
       variable c : counter_t;
@@ -179,6 +195,32 @@ package body counters is
    function to_string(c : counter_t) return string is
    begin
       return "(val => " & integer'image(c.val) &", min => " & integer'image(c.min) & ", max => " & integer'image(c.max) & ")";
+   end function;
+
+
+   --------------------------------
+   -- Saturated_counter_t functions
+   --------------------------------
+
+   function init(max : integer; init_val : integer := 0; min : integer := 0) return saturated_counter_t is
+      variable c : saturated_counter_t;
+   begin
+      if max < min then
+         report "max value " & integer'image(max) & " is less than min value " & integer'image(min)
+            severity failure;
+      end if;
+      if init_val < min then
+         report "init value " & integer'image(init_val) & " is less than min value " & integer'image(min)
+            severity failure;
+      end if;
+      if init_val > max then
+         report "init value " & integer'image(init_val) & " is greater than max value " & integer'image(max)
+            severity failure;
+      end if;
+      c.min := min;
+      c.max := max;
+      c.val := init_val;
+      return c;
    end function;
 
 end package body;
