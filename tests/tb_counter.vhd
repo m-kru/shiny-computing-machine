@@ -88,6 +88,26 @@ begin
    end process;
 
 
+   test_greater_than_integer : process is
+      variable c : counter_t := init(10);
+   begin
+      assert c > -1;
+      c := inc(c);
+      assert c > 0;
+      wait;
+   end process;
+
+
+   test_greater_than_equal_integer : process is
+      variable c : counter_t := init(10);
+   begin
+      assert c >= 0;
+      c := inc(c);
+      assert c >= 0;
+      wait;
+   end process;
+
+
    test_equal_counter : process is
       constant MAX1 : integer := 6;
       constant MAX2 : integer := 17;
@@ -129,6 +149,27 @@ begin
       assert c1 <= c2;
       c2 := inc(c2);
       assert c1 <= c2;
+      wait;
+   end process;
+
+
+   test_greater_than_counter : process is
+      variable c1 : counter_t := init(10);
+      variable c2 : counter_t := init(10);
+   begin
+      c1 := inc(c1);
+      assert c1 > c2;
+      wait;
+   end process;
+
+
+   test_greater_than_equal_counter : process is
+      variable c1 : counter_t := init(10);
+      variable c2 : counter_t := init(10);
+   begin
+      assert c1 >= c2;
+      c1 := inc(c1);
+      assert c1 > c2;
       wait;
    end process;
 
