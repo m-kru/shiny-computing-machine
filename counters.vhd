@@ -55,6 +55,15 @@ package counters is
    -- /= returns true if counter l value is not equal to counter r value.
    function "/="(l, r : counter_t) return boolean;
 
+   -- < returns true if counter c value is less than x.
+   function "<"(c : counter_t; x : integer) return boolean;
+   -- < returns true if counter l value is less than counter r value.
+   function "<"(l, r : counter_t) return boolean;
+
+   -- <= returns true if counter c value is less than or equal to x.
+   function "<="(c : counter_t; x : integer) return boolean;
+   -- < returns true if counter l value is less than or equal to counter r value.
+   function "<="(l, r : counter_t) return boolean;
 
    -- Saturated_counter_t is a counter with saturated arithmetic.
    -- It doesn't wrap around when incremented at max value or decremented at min value.
@@ -219,6 +228,30 @@ package body counters is
    function "/="(l, r : counter_t) return boolean is
    begin
       if l.val /= r.val then return true; end if;
+      return false;
+   end function;
+
+   function "<" (c : counter_t; x : integer) return boolean is
+   begin
+      if c.val < x then return true; end if;
+      return false;
+   end function;
+
+   function "<"(l, r : counter_t) return boolean is
+   begin
+      if l.val < r.val then return true; end if;
+      return false;
+   end function;
+
+   function "<=" (c : counter_t; x : integer) return boolean is
+   begin
+      if c.val <= x then return true; end if;
+      return false;
+   end function;
+
+   function "<="(l, r : counter_t) return boolean is
+   begin
+      if l.val <= r.val then return true; end if;
       return false;
    end function;
 
