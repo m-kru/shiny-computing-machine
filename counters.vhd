@@ -17,9 +17,6 @@ package counters is
    -- Init_width initializes a counter based on its width assuming the min value of the counter is 0.
    -- Max determines whether the init value shall equal max (max = true) or min (max = false).
    function init_width(width : positive; max : boolean := false) return counter_t;
-   -- Is_zero returns true if counter c equals 0.
-   -- It fails if zero is not in the range of the counter.
-   function is_zero(c : counter_t) return boolean;
    -- Is_min returns true if counter c equals its min value.
    function is_min(c : counter_t) return boolean;
    -- Is_max returns true if counter c equals its max value.
@@ -125,18 +122,6 @@ package body counters is
          c.val := c.max;
       end if;
       return c;
-   end function;
-
-   function is_zero(c : counter_t) return boolean is
-   begin
-      if 0 < c.min or 0 > c.max then
-         report "0 is not within counter range <" & integer'image(c.min) & ";" & integer'image(c.max) & ">"
-            severity failure;
-      end if;
-      if c.val = 0 then
-         return true;
-      end if;
-      return false;
    end function;
 
    function is_min(c : counter_t) return boolean is

@@ -174,17 +174,6 @@ begin
    end process;
 
 
-   test_is_zero : process is
-      constant MAX : integer := 1023;
-      variable c : counter_t := init(MAX);
-   begin
-      assert is_zero(c);
-      c := inc(c);
-      assert not is_zero(c);
-      wait;
-   end process;
-
-
    test_is_min : process is
       constant MAX : integer := 1023;
       constant VAL : integer := 1023;
@@ -306,7 +295,7 @@ begin
       variable c : counter_t := init(MAX, MIN, MIN);
    begin
       c := set(c, 0);
-      assert is_zero(c);
+      assert c = 0;
       c := set(c, MIN);
       assert is_min(c);
       c := set(c, MAX);
