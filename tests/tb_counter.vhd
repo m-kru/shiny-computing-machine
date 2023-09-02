@@ -45,15 +45,49 @@ begin
    end process;
 
 
-   test_equal : process is
+   test_equal_integer : process is
       constant MAX : integer := 1023;
       variable c : counter_t := init(MAX);
    begin
-      assert equal(c, 0);
+      assert c = 0;
       c := inc(c);
-      assert equal(c, 1);
+      assert c = 1;
       c := inc(c, 1000);
-      assert equal(c, 1001);
+      assert c = 1001;
+      wait;
+   end process;
+
+
+   test_inequal_integer : process is
+      variable c : counter_t := init(10);
+   begin
+      assert c /= 1;
+      c := inc(c);
+      assert c /= 0;
+      wait;
+   end process;
+
+
+   test_equal_counter : process is
+      constant MAX1 : integer := 6;
+      constant MAX2 : integer := 17;
+      variable c1 : counter_t := init(MAX1);
+      variable c2 : counter_t := init(MAX2);
+   begin
+      assert c1 = c2;
+      c1 := inc(c1);
+      c2 := inc(c2);
+      assert c1 = c2;
+      wait;
+   end process;
+
+
+   test_inequal_counter : process is
+      variable c1 : counter_t := init(10);
+      variable c2 : counter_t := init(20);
+   begin
+      c1 := inc(c1);
+      assert c1 /= c2;
       wait;
    end process;
 
@@ -98,15 +132,15 @@ begin
       variable c : counter_t := init(MAX);
    begin
       c := inc(c);
-      assert equal(c, 1);
+      assert c = 1;
       c := inc(c, 4);
-      assert equal(c, 5);
+      assert c = 5;
       c := inc(c, 12);
-      assert equal(c, 1);
+      assert c = 1;
       c := inc(c, 32);
-      assert equal(c, 1);
+      assert c = 1;
       c := inc(c, 15);
-      assert equal(c, 0);
+      assert c = 0;
       wait;
    end process;
 
@@ -116,11 +150,11 @@ begin
       variable c : counter_t := init(MAX);
    begin
       c := inc_if(c, true, 3);
-      assert equal(c, 3);
+      assert c = 3;
       c := inc_if(c, false);
-      assert equal(c, 3);
+      assert c = 3;
       c := inc_if(c, false, 3);
-      assert equal(c, 3);
+      assert c = 3;
       wait;
    end process;
 
@@ -196,7 +230,7 @@ begin
       c := set(c, MAX);
       assert is_max(c);
       c := set(c, 3);
-      assert equal(c, 3);
+      assert c = 3;
       wait;
    end process;
 

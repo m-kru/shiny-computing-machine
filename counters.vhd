@@ -13,13 +13,10 @@ package counters is
       val : integer;
    end record;
 
-
    function init(max : integer; init_val : integer := 0; min : integer := 0) return counter_t;
    -- Init_width initializes a counter based on its width assuming the min value of the counter is 0.
    -- Max determines whether the init value shall equal max (max = true) or min (max = false).
    function init_width(width : positive; max : boolean := false) return counter_t;
-   -- Equal returns true if counter c value equals x.
-   function equal(c : counter_t; x : integer) return boolean;
    -- Is_zero returns true if counter c equals 0.
    -- It fails if zero is not in the range of the counter.
    function is_zero(c : counter_t) return boolean;
@@ -47,6 +44,16 @@ package counters is
    function set(c : counter_t; x : integer) return counter_t;
    -- To_string converts counter c to string.
    function to_string(c : counter_t) return string;
+
+   -- = returns true if counter c value equals x.
+   function "="(c : counter_t; x : integer) return boolean;
+   -- = returns true if counter l value equals counter r value.
+   function "="(l, r : counter_t) return boolean;
+
+   -- /= returns true if counter c value is not equal to x.
+   function "/="(c : counter_t; x : integer) return boolean;
+   -- /= returns true if counter l value is not equal to counter r value.
+   function "/="(l, r : counter_t) return boolean;
 
 
    -- Saturated_counter_t is a counter with saturated arithmetic.
@@ -99,12 +106,6 @@ package body counters is
          c.val := c.max;
       end if;
       return c;
-   end function;
-
-   function equal(c : counter_t; x : integer) return boolean is
-   begin
-      if c.val = x then return true; end if;
-      return false;
    end function;
 
    function is_zero(c : counter_t) return boolean is
@@ -195,6 +196,30 @@ package body counters is
    function to_string(c : counter_t) return string is
    begin
       return "(val => " & integer'image(c.val) &", min => " & integer'image(c.min) & ", max => " & integer'image(c.max) & ")";
+   end function;
+
+   function "="(c : counter_t; x : integer) return boolean is
+   begin
+      if c.val = x then return true; end if;
+      return false;
+   end function;
+
+   function "="(l, r : counter_t) return boolean is
+   begin
+      if l.val = r.val then return true; end if;
+      return false;
+   end function;
+
+   function "/="(c : counter_t; x : integer) return boolean is
+   begin
+      if c.val /= x then return true; end if;
+      return false;
+   end function;
+
+   function "/="(l, r : counter_t) return boolean is
+   begin
+      if l.val /= r.val then return true; end if;
+      return false;
    end function;
 
 
