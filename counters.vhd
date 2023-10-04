@@ -142,9 +142,14 @@ package body counters is
 
    function inc(c : counter_t; i : natural := 1) return counter_t is
       variable r : counter_t := c;
-      variable rang : positive := r.max - r.min + 1;
+      constant to_max  : natural := c.max - c.val;
+      constant inc_val : natural := i mod (r.max - r.min + 1);
    begin
-      r.val := (r.val + (i mod rang)) mod rang;
+      if to_max >= inc_val then
+         r.val := r.val + inc_val;
+      else
+         r.val := r.min + inc_val - to_max - 1;
+      end if;
       return r;
    end function;
 

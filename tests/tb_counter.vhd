@@ -182,7 +182,7 @@ begin
    begin
       assert is_min(c);
       c := inc(c);
-      assert not is_min(c);
+      assert is_min(c);
       wait;
    end process;
 
@@ -212,6 +212,38 @@ begin
       assert c = 1;
       c := inc(c, 15);
       assert c = 0;
+      wait;
+   end process;
+
+
+   test_inc_positive_max_negative_min : process is
+      variable c : counter_t := init(15, 0, -16);
+   begin
+      c := inc(c);
+      assert c = 1;
+      c := inc(c, 4);
+      assert c = 5;
+      c := inc(c, 12);
+      assert c = -15;
+      c := inc(c, 1);
+      assert c = -14;
+      c := inc(c, 14);
+      assert c = 0;
+      wait;
+   end process;
+
+
+   test_inc_max_and_min_negative : process is
+      variable c : counter_t := init(-10, -15, -20);
+   begin
+      c := inc(c);
+      assert c = -14;
+      c := inc(c, 4);
+      assert c = -10;
+      c := inc(c);
+      assert c = -20;
+      c := inc(c, 11);
+      assert c = -20;
       wait;
    end process;
 
