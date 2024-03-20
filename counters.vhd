@@ -13,7 +13,7 @@ package counters is
   end record;
 
   -- The init function initializes counter_t.
-  function init (max : integer; init_val : integer := 0; min : integer := 0) return counter_t;
+  function init (max : integer; val : integer := 0; min : integer := 0) return counter_t;
   -- The init_width initializes a counter based on its width assuming the min value of the counter is 0.
   -- The max parameter determines whether the init value shall equal max (max = true) or min (max = false).
   function init_width (width : positive; max : boolean := false) return counter_t;
@@ -88,7 +88,7 @@ package counters is
     val : integer;
   end record;
 
-  function init(max : integer; init_val : integer := 0; min : integer := 0) return saturated_counter_t;
+  function init(max : integer; val : integer := 0; min : integer := 0) return saturated_counter_t;
 
 end package;
 
@@ -98,24 +98,24 @@ package body counters is
   -- counter_t
   --
 
-  function init (max : integer; init_val : integer := 0; min : integer := 0) return counter_t is
+  function init (max : integer; val : integer := 0; min : integer := 0) return counter_t is
     variable c : counter_t;
   begin
     if max < min then
       report "max value " & integer'image(max) & " is less than min value " & integer'image(min)
         severity failure;
     end if;
-    if init_val < min then
-      report "init value " & integer'image(init_val) & " is less than min value " & integer'image(min)
+    if val < min then
+      report "init value " & integer'image(val) & " is less than min value " & integer'image(min)
         severity failure;
     end if;
-    if init_val > max then
-      report "init value " & integer'image(init_val) & " is greater than max value " & integer'image(max)
+    if val > max then
+      report "init value " & integer'image(val) & " is greater than max value " & integer'image(max)
         severity failure;
     end if;
     c.min := min;
     c.max := max;
-    c.val := init_val;
+    c.val := val;
     return c;
   end function;
 
@@ -216,24 +216,24 @@ package body counters is
   -- saturated_counter_t
   --
 
-  function init (max : integer; init_val : integer := 0; min : integer := 0) return saturated_counter_t is
+  function init (max : integer; val : integer := 0; min : integer := 0) return saturated_counter_t is
     variable c : saturated_counter_t;
   begin
     if max < min then
       report "max value " & integer'image(max) & " is less than min value " & integer'image(min)
         severity failure;
     end if;
-    if init_val < min then
-      report "init value " & integer'image(init_val) & " is less than min value " & integer'image(min)
+    if val < min then
+      report "init value " & integer'image(val) & " is less than min value " & integer'image(min)
         severity failure;
     end if;
-    if init_val > max then
-      report "init value " & integer'image(init_val) & " is greater than max value " & integer'image(max)
+    if val > max then
+      report "init value " & integer'image(val) & " is greater than max value " & integer'image(max)
         severity failure;
     end if;
     c.min := min;
     c.max := max;
-    c.val := init_val;
+    c.val := val;
     return c;
   end function;
 
