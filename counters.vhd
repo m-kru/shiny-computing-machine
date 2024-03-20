@@ -211,74 +211,62 @@ package body counters is
 
    function "="(c : counter_t; x : integer) return boolean is
    begin
-      if c.val = x then return true; end if;
-      return false;
+      return c.val = x;
    end function;
 
    function "="(l, r : counter_t) return boolean is
    begin
-      if l.val = r.val then return true; end if;
-      return false;
+      return l.val = r.val;
    end function;
 
    function "/="(c : counter_t; x : integer) return boolean is
    begin
-      if c.val /= x then return true; end if;
-      return false;
+      return c.val /= x;
    end function;
 
    function "/="(l, r : counter_t) return boolean is
    begin
-      if l.val /= r.val then return true; end if;
-      return false;
+      return l.val /= r.val;
    end function;
 
    function "<" (c : counter_t; x : integer) return boolean is
    begin
-      if c.val < x then return true; end if;
-      return false;
+      return c.val < x;
    end function;
 
    function "<"(l, r : counter_t) return boolean is
    begin
-      if l.val < r.val then return true; end if;
-      return false;
+      return l.val < r.val;
    end function;
 
    function "<=" (c : counter_t; x : integer) return boolean is
    begin
-      if c.val <= x then return true; end if;
-      return false;
+      return c.val <= x;
    end function;
 
    function "<="(l, r : counter_t) return boolean is
    begin
-      if l.val <= r.val then return true; end if;
-      return false;
+      return l.val <= r.val;
    end function;
 
    function ">" (c : counter_t; x : integer) return boolean is
    begin
-      if c.val > x then return true; end if;
-      return false;
+      return c.val > x;
    end function;
 
    function ">"(l, r : counter_t) return boolean is
    begin
-      if l.val > r.val then return true; end if;
-      return false;
+      return l.val > r.val;
    end function;
 
    function ">=" (c : counter_t; x : integer) return boolean is
    begin
-      if c.val >= x then return true; end if;
-      return false;
+      return c.val >= x;
    end function;
 
    function ">="(l, r : counter_t) return boolean is
    begin
-      if l.val >= r.val then return true; end if;
-      return false;
+      return l.val >= r.val;
    end function;
 
    --
