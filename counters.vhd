@@ -114,14 +114,9 @@ package body counters is
   end function;
 
   function init_width(width : positive; max : boolean := false) return counter_t is
-    variable c : counter_t;
+    variable c : counter_t := (min => 0, max => 2 ** width - 1, val => 0);
   begin
-    c.max := 2 ** width - 1;
-    c.min := 0;
-    c.val := 0;
-    if max then
-      c.val := c.max;
-    end if;
+    c.val := c.max when max;
     return c;
   end function;
 
@@ -145,7 +140,7 @@ package body counters is
   end function;
 
   function inc_if(c : counter_t; cond : boolean; i : natural := 1) return counter_t is
-    begin return inc(c, i) when cond else c; end function;
+    begin if cond then return inc(c, i); else return c; end if; end function;
 
   function rst_min(c : counter_t) return counter_t is
     variable r : counter_t := c;
@@ -155,7 +150,7 @@ package body counters is
   end function;
 
   function rst_min_if(c : counter_t; cond : boolean) return counter_t is
-    begin return rst_min(c) when cond else c; end function;
+    begin if cond then return rst_min(c); else return c; end if; end function;
 
   function rst_max(c : counter_t) return counter_t is
     variable r : counter_t := c;
@@ -165,7 +160,7 @@ package body counters is
   end function;
 
   function rst_max_if(c : counter_t; cond : boolean) return counter_t is
-    begin return rst_max(c) when cond else c; end function;
+    begin if cond then return rst_max(c); else return c; end if; end function;
 
   function set(c : counter_t; x : integer) return counter_t is
     variable r : counter_t := c;
