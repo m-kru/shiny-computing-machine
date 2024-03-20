@@ -4,8 +4,7 @@
 
 package counters is
 
-   -- Counter_t is a classic wrap around counter.
-   -- This is a type of counter that is used most often.
+   -- The counter_t is a classic wrap-around counter.
    -- Its range is limited by the range of the integer type.
    type counter_t is record
       min : integer;
@@ -13,34 +12,35 @@ package counters is
       val : integer;
    end record;
 
-   function init(max : integer; init_val : integer := 0; min : integer := 0) return counter_t;
-   -- Init_width initializes a counter based on its width assuming the min value of the counter is 0.
-   -- Max determines whether the init value shall equal max (max = true) or min (max = false).
-   function init_width(width : positive; max : boolean := false) return counter_t;
-   -- Is_min returns true if counter c equals its min value.
-   function is_min(c : counter_t) return boolean;
-   -- Is_max returns true if counter c equals its max value.
-   function is_max(c : counter_t) return boolean;
-   -- Inc returns counter c incremented by i.
-   function inc(c : counter_t; i : natural := 1) return counter_t;
-   -- Inc_if returns counter c incremented by i, if the condition cond is met.
+   -- The init function initializes counter_t.
+   function init (max : integer; init_val : integer := 0; min : integer := 0) return counter_t;
+   -- The init_width initializes a counter based on its width assuming the min value of the counter is 0.
+   -- The max parameter determines whether the init value shall equal max (max = true) or min (max = false).
+   function init_width (width : positive; max : boolean := false) return counter_t;
+   -- The is_min returns true if counter c equals its min value.
+   function is_min (c : counter_t) return boolean;
+   -- The is_max returns true if counter c equals its max value.
+   function is_max (c : counter_t) return boolean;
+   -- The inc returns counter c incremented by i.
+   function inc (c : counter_t; i : natural := 1) return counter_t;
+   -- The inc_if returns counter c incremented by i, if the condition cond is met.
    -- Otherwise it returns counter c.
-   function inc_if(c : counter_t; cond : boolean; i : natural := 1) return counter_t;
-   -- Rst_min returns counter c reset to its min value.
-   function rst_min(c : counter_t) return counter_t;
-   -- Rst_min_if returns counter c reset to its min value if the condition cond is met.
+   function inc_if (c : counter_t; cond : boolean; i : natural := 1) return counter_t;
+   -- The rst_min returns counter c reset to its min value.
+   function rst_min (c : counter_t) return counter_t;
+   -- The rst_min_if returns counter c reset to its min value if the condition cond is met.
    -- Otherwise it returns counter c.
-   function rst_min_if(c : counter_t; cond : boolean) return counter_t;
-   -- Rst_max returns counter c reset to its max value.
-   function rst_max(c : counter_t) return counter_t;
-   -- Rst_max_if returns counter c reset to its max value if the condition cond is met.
+   function rst_min_if (c : counter_t; cond : boolean) return counter_t;
+   -- The rst_max returns counter c reset to its max value.
+   function rst_max (c : counter_t) return counter_t;
+   -- The rst_max_if returns counter c reset to its max value if the condition cond is met.
    -- Otherwise it returns counter c.
-   function rst_max_if(c : counter_t; cond : boolean) return counter_t;
-   -- Set returns counter c with value set to x.
+   function rst_max_if (c : counter_t; cond : boolean) return counter_t;
+   -- The set returns counter c with value set to x.
    -- It fails if x value is not in range.
-   function set(c : counter_t; x : integer) return counter_t;
-   -- To_string converts counter c to string.
-   function to_string(c : counter_t) return string;
+   function set (c : counter_t; x : integer) return counter_t;
+   -- The to_string converts counter c to string.
+   function to_string (c : counter_t) return string;
 
    -- = returns true if counter c value equals x.
    function "="(c : counter_t; x : integer) return boolean;
@@ -72,7 +72,8 @@ package counters is
    -- >= returns true if counter l value is greater than or equal to counter r value.
    function ">="(l, r : counter_t) return boolean;
 
-   -- Saturated_counter_t is a counter with saturated arithmetic.
+
+   -- The saturated_counter_t is a counter with saturated arithmetic.
    -- It doesn't wrap around when incremented at max value or decremented at min value.
    -- Its range is limited by the range of the integer type.
    type saturated_counter_t is record
@@ -80,15 +81,16 @@ package counters is
       max : integer;
       val : integer;
    end record;
+
    function init(max : integer; init_val : integer := 0; min : integer := 0) return saturated_counter_t;
 
 end package;
 
 package body counters is
 
-   ----------------------
-   -- Counter_t functions
-   ----------------------
+   --
+   -- counter_t
+   --
 
    function init(max : integer; init_val : integer := 0; min : integer := 0) return counter_t is
       variable c : counter_t;
@@ -279,9 +281,9 @@ package body counters is
       return false;
    end function;
 
-   --------------------------------
-   -- Saturated_counter_t functions
-   --------------------------------
+   --
+   -- saturated_counter_t
+   --
 
    function init(max : integer; init_val : integer := 0; min : integer := 0) return saturated_counter_t is
       variable c : saturated_counter_t;
