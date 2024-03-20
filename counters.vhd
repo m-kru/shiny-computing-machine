@@ -126,14 +126,10 @@ package body counters is
   end function;
 
   function is_min(c : counter_t) return boolean is
-  begin
-    return c.val = c.min;
-  end function;
+    begin return c.val = c.min; end function;
 
   function is_max(c : counter_t) return boolean is
-  begin
-    return c.val = c.max;
-  end function;
+    begin return c.val = c.max; end function;
 
   function inc(c : counter_t; i : natural := 1) return counter_t is
     variable r : counter_t := c;
@@ -203,64 +199,40 @@ package body counters is
   end function;
 
   function "="(c : counter_t; x : integer) return boolean is
-  begin
-    return c.val = x;
-  end function;
+    begin return c.val = x; end function;
 
   function "="(l, r : counter_t) return boolean is
-  begin
-    return l.val = r.val;
-  end function;
+    begin return l.val = r.val; end function;
 
   function "/="(c : counter_t; x : integer) return boolean is
-  begin
-    return c.val /= x;
-  end function;
+    begin return c.val /= x; end function;
 
   function "/="(l, r : counter_t) return boolean is
-  begin
-    return l.val /= r.val;
-  end function;
+    begin return l.val /= r.val; end function;
 
   function "<" (c : counter_t; x : integer) return boolean is
-  begin
-    return c.val < x;
-  end function;
+    begin return c.val < x; end function;
 
   function "<"(l, r : counter_t) return boolean is
-  begin
-    return l.val < r.val;
-  end function;
+    begin return l.val < r.val; end function;
 
   function "<=" (c : counter_t; x : integer) return boolean is
-  begin
-    return c.val <= x;
-  end function;
+    begin return c.val <= x; end function;
 
   function "<="(l, r : counter_t) return boolean is
-  begin
-    return l.val <= r.val;
-  end function;
+    begin return l.val <= r.val; end function;
 
   function ">" (c : counter_t; x : integer) return boolean is
-  begin
-    return c.val > x;
-  end function;
+    begin return c.val > x; end function;
 
   function ">"(l, r : counter_t) return boolean is
-  begin
-    return l.val > r.val;
-  end function;
+    begin return l.val > r.val; end function;
 
   function ">=" (c : counter_t; x : integer) return boolean is
-  begin
-    return c.val >= x;
-  end function;
+    begin return c.val >= x; end function;
 
   function ">="(l, r : counter_t) return boolean is
-  begin
-    return l.val >= r.val;
-  end function;
+    begin return l.val >= r.val; end function;
 
   --
   -- saturated_counter_t
