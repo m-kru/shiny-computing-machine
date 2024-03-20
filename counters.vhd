@@ -145,12 +145,7 @@ package body counters is
   end function;
 
   function inc_if(c : counter_t; cond : boolean; i : natural := 1) return counter_t is
-  begin
-    if cond then
-      return inc(c, i);
-    end if;
-    return c;
-  end function;
+    begin return inc(c, i) when cond else c; end function;
 
   function rst_min(c : counter_t) return counter_t is
     variable r : counter_t := c;
@@ -160,12 +155,7 @@ package body counters is
   end function;
 
   function rst_min_if(c : counter_t; cond : boolean) return counter_t is
-  begin
-    if cond then
-      return rst_min(c);
-    end if;
-    return c;
-  end function;
+    begin return rst_min(c) when cond else c; end function;
 
   function rst_max(c : counter_t) return counter_t is
     variable r : counter_t := c;
@@ -175,12 +165,7 @@ package body counters is
   end function;
 
   function rst_max_if(c : counter_t; cond : boolean) return counter_t is
-  begin
-    if cond then
-      return rst_max(c);
-    end if;
-    return c;
-  end function;
+    begin return rst_max(c) when cond else c; end function;
 
   function set(c : counter_t; x : integer) return counter_t is
     variable r : counter_t := c;
