@@ -44,6 +44,9 @@ package counters is
   -- The set returns counter c with value set to x.
   -- It fails if x value is not in range.
   function set (c : counter_t; x : integer) return counter_t;
+  -- The set_if returns counter c with value set to x if the condition cond is met.
+  -- Otherwise it returns counter c.
+  function set_if (c : counter_t; x : integer; cond : boolean) return counter_t;
 
   -- The to_string converts counter c to string.
   function to_string (c : counter_t) return string;
@@ -170,6 +173,9 @@ package body counters is
     r.val := x;
     return r;
   end function;
+
+  function set_if (c : counter_t; x : integer; cond : boolean) return counter_t is
+    begin if cond then return set(c, x); else return c; end if; end function;
 
   function to_string (c : counter_t) return string is
   begin

@@ -338,6 +338,19 @@ begin
   end process;
 
 
+  test_set_if : process is
+    variable c : counter_t := init(8);
+  begin
+    c := set_if(c, 5, false);
+    assert c = 0;
+    c := set_if(c, 5, true);
+    assert c = 5;
+    c := set_if(c, 8, true);
+    assert c = 8;
+    wait;
+  end process;
+
+
   test_to_strig : process is
     variable c1 : counter_t := init(255);
     variable c2 : counter_t := init(1023, 151, -127);
