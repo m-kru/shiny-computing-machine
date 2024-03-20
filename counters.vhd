@@ -118,9 +118,8 @@ package body counters is
   begin
     c.max := 2 ** width - 1;
     c.min := 0;
-    if max = false then
-      c.val := 0;
-    else
+    c.val := 0;
+    if max then
       c.val := c.max;
     end if;
     return c;
@@ -128,18 +127,12 @@ package body counters is
 
   function is_min(c : counter_t) return boolean is
   begin
-    if c.val = c.min then
-      return true;
-    end if;
-    return false;
+    return c.val = c.min;
   end function;
 
   function is_max(c : counter_t) return boolean is
   begin
-    if c.val = c.max then
-      return true;
-    end if;
-    return false;
+    return c.val = c.max;
   end function;
 
   function inc(c : counter_t; i : natural := 1) return counter_t is
