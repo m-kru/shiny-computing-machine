@@ -1,5 +1,5 @@
-library work;
-  use work.counters.all;
+library counters;
+  use counters.counters.all;
 
 entity tb_counter is
 end entity;

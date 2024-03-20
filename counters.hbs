@@ -1,0 +1,22 @@
+namespace eval vhdl::counters {
+  proc src {} {
+    hbs::SetLib "counters"
+    hbs::AddFile counters.vhd
+  }
+
+  proc _tb {top} {
+    hbs::SetTool "nvc"
+    hbs::AddPostElabCb hbs::SetArgsPrefix "--messages=compact"
+    hbs::SetTop $top
+    src
+    hbs::SetLib ""
+  }
+
+  proc tb-counter {} {
+    _tb "tb_counter"
+    hbs::AddFile tb/tb-counter.vhd
+    hbs::Run
+  }
+
+  hbs::Register
+}

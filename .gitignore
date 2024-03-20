@@ -1,3 +1,4 @@
 *.o
 tb_*
 *.cf
+build/
