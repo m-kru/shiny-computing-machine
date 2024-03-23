@@ -30,14 +30,13 @@ begin
 
 
   test_init_width : process is
-    constant WIDTH : integer := 8;
     variable c : counter_t;
   begin
-    c := init_width(WIDTH);
+    c := init_width(8);
     assert c.min = 0;
     assert c.val = 0;
     assert c.max = 255;
-    c := init_width(WIDTH, true);
+    c := init_width(8, true);
     assert c.min = 0;
     assert c.val = 255;
     assert c.max = 255;
@@ -46,8 +45,7 @@ begin
 
 
   test_equal_integer : process is
-    constant MAX : integer := 1023;
-    variable c : counter_t := init(MAX);
+    variable c : counter_t := init(1001);
   begin
     assert c = 0;
     c := inc(c);
@@ -109,10 +107,8 @@ begin
 
 
   test_equal_counter : process is
-    constant MAX1 : integer := 6;
-    constant MAX2 : integer := 17;
-    variable c1 : counter_t := init(MAX1);
-    variable c2 : counter_t := init(MAX2);
+    variable c1 : counter_t := init(6);
+    variable c2 : counter_t := init(17);
   begin
     assert c1 = c2;
     c1 := inc(c1);
@@ -175,10 +171,7 @@ begin
 
 
   test_is_min : process is
-    constant MAX : integer := 1023;
-    constant VAL : integer := 1023;
-    constant MIN : integer := 1023;
-    variable c : counter_t := init(MAX, VAL, MIN);
+    variable c : counter_t := init(1023, 1023, 1023);
   begin
     assert is_min(c);
     c := inc(c);
@@ -199,8 +192,7 @@ begin
 
 
   test_dec : process is
-    constant MAX : integer := 15;
-    variable c : counter_t := init(MAX);
+    variable c : counter_t := init(15);
   begin
     c := dec(c);
     assert c = 15;
@@ -249,8 +241,7 @@ begin
 
 
   test_dec_if : process is
-    constant MAX : integer := 15;
-    variable c : counter_t := init(MAX);
+    variable c : counter_t := init(15);
   begin
     c := dec_if(c, true, 3);
     assert c = 13;
@@ -263,8 +254,7 @@ begin
 
 
   test_inc : process is
-    constant MAX : integer := 15;
-    variable c : counter_t := init(MAX);
+    variable c : counter_t := init(15);
   begin
     c := inc(c);
     assert c = 1;
@@ -298,8 +288,7 @@ begin
 
 
   test_inc_if : process is
-    constant MAX : integer := 15;
-    variable c : counter_t := init(MAX);
+    variable c : counter_t := init(15);
   begin
     c := inc_if(c, true, 3);
     assert c = 3;
@@ -312,9 +301,7 @@ begin
 
 
   test_rst_min : process is
-    constant MAX : integer := 15;
-    constant MIN : integer := 7;
-    variable c : counter_t := init(MAX, MIN, MIN);
+    variable c : counter_t := init(15, 7, 7);
   begin
     assert is_min(c);
     c := inc(c);
@@ -326,9 +313,7 @@ begin
 
 
   test_rst_min_if : process is
-    constant MAX : integer := 15;
-    constant MIN : integer := 7;
-    variable c : counter_t := init(MAX, MAX, MIN);
+    variable c : counter_t := init(15, 15, 7);
   begin
     assert not is_min(c);
     c := rst_min_if(c, true);
@@ -342,9 +327,7 @@ begin
 
 
   test_rst_max : process is
-    constant MAX : integer := 15;
-    constant MIN : integer := 7;
-    variable c : counter_t := init(MAX, MAX, MIN);
+    variable c : counter_t := init(15, 15, 7);
   begin
     assert is_max(c);
     c := inc(c);
@@ -356,9 +339,7 @@ begin
 
 
   test_rst_max_if : process is
-    constant MAX : integer := 15;
-    constant MIN : integer := 7;
-    variable c : counter_t := init(MAX, MIN, MIN);
+    variable c : counter_t := init(15, 7, 7);
   begin
     assert not is_max(c);
     c := rst_max_if(c, true);
