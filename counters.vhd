@@ -23,11 +23,17 @@ package counters is
   -- The is_max returns true if counter c equals its max value.
   function is_max (c : counter_t) return boolean;
 
-  -- The inc returns counter c incremented by i.
-  function inc (c : counter_t; i : natural := 1) return counter_t;
-  -- The inc_if returns counter c incremented by i, if the condition cond is met.
+  -- The dec returns counter c decremented by x.
+  function dec (c : counter_t; x : natural := 1) return counter_t;
+  -- The dec_if returns counter c decremented by x, if the condition cond is met.
   -- Otherwise it returns counter c.
-  function inc_if (c : counter_t; cond : boolean; i : natural := 1) return counter_t;
+  function dec_if (c : counter_t; cond : boolean; x : natural := 1) return counter_t;
+
+  -- The inc returns counter c incremented by x.
+  function inc (c : counter_t; x : natural := 1) return counter_t;
+  -- The inc_if returns counter c incremented by x, if the condition cond is met.
+  -- Otherwise it returns counter c.
+  function inc_if (c : counter_t; cond : boolean; x : natural := 1) return counter_t;
 
   -- The rst_min returns counter c reset to its min value.
   function rst_min (c : counter_t) return counter_t;
@@ -135,10 +141,26 @@ package body counters is
   function is_max (c : counter_t) return boolean is
     begin return c.val = c.max; end function;
 
-  function inc (c : counter_t; i : natural := 1) return counter_t is
+  function dec (c : counter_t; x : natural := 1) return counter_t is
+    variable r : counter_t := c;
+    constant to_min  : natural := c.val - c.min;
+    constant dec_val : natural := x mod (r.max - r.min + 1);
+  begin
+    if to_min >= dec_val then
+      r.val := r.val - dec_val;
+    else
+      r.val := r.max - dec_val - to_min + 1;
+    end if;
+    return r;
+  end function;
+
+  function dec_if (c : counter_t; cond : boolean; x : natural := 1) return counter_t is
+    begin if cond then return dec(c, x); else return c; end if; end function;
+
+  function inc (c : counter_t; x : natural := 1) return counter_t is
     variable r : counter_t := c;
     constant to_max  : natural := c.max - c.val;
-    constant inc_val : natural := i mod (r.max - r.min + 1);
+    constant inc_val : natural := x mod (r.max - r.min + 1);
   begin
     if to_max >= inc_val then
       r.val := r.val + inc_val;
@@ -148,8 +170,8 @@ package body counters is
     return r;
   end function;
 
-  function inc_if (c : counter_t; cond : boolean; i : natural := 1) return counter_t is
-    begin if cond then return inc(c, i); else return c; end if; end function;
+  function inc_if (c : counter_t; cond : boolean; x : natural := 1) return counter_t is
+    begin if cond then return inc(c, x); else return c; end if; end function;
 
   function rst_min (c : counter_t) return counter_t is
     begin return (c.min, c.max, c.min); end function;

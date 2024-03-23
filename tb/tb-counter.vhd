@@ -198,6 +198,70 @@ begin
   end process;
 
 
+  test_dec : process is
+    constant MAX : integer := 15;
+    variable c : counter_t := init(MAX);
+  begin
+    c := dec(c);
+    assert c = 15;
+    c := dec(c, 5);
+    assert c = 10;
+    c := dec(c, 16);
+    assert c = 10;
+    c := dec(c);
+    assert c = 9;
+    c := dec(c, 17);
+    assert c = 8;
+    wait;
+  end process;
+
+
+  test_dec_positive_max_negative_min : process is
+    variable c : counter_t := init(15, 0, -16);
+  begin
+    c := dec(c);
+    assert c = -1;
+    c := dec(c, 10);
+    assert c = -11;
+    c := dec(c, 32);
+    assert c = -11;
+    c := dec(c, 5);
+    assert c = -16;
+    c := dec(c);
+    assert c = 15;
+    wait;
+  end process;
+
+
+  test_dec_max_and_min_negative : process is
+    variable c : counter_t := init(-10, -15, -20);
+  begin
+    c := dec(c);
+    assert c = -16;
+    c := dec(c, 4);
+    assert c = -20;
+    c := dec(c);
+    assert c = -10;
+    c := dec(c, 11);
+    assert c = -10;
+    wait;
+  end process;
+
+
+  test_dec_if : process is
+    constant MAX : integer := 15;
+    variable c : counter_t := init(MAX);
+  begin
+    c := dec_if(c, true, 3);
+    assert c = 13;
+    c := dec_if(c, false);
+    assert c = 13;
+    c := dec_if(c, true);
+    assert c = 12;
+    wait;
+  end process;
+
+
   test_inc : process is
     constant MAX : integer := 15;
     variable c : counter_t := init(MAX);
@@ -233,21 +297,6 @@ begin
   end process;
 
 
-  test_inc_max_and_min_negative : process is
-    variable c : counter_t := init(-10, -15, -20);
-  begin
-    c := inc(c);
-    assert c = -14;
-    c := inc(c, 4);
-    assert c = -10;
-    c := inc(c);
-    assert c = -20;
-    c := inc(c, 11);
-    assert c = -20;
-    wait;
-  end process;
-
-
   test_inc_if : process is
     constant MAX : integer := 15;
     variable c : counter_t := init(MAX);
@@ -256,8 +305,8 @@ begin
     assert c = 3;
     c := inc_if(c, false);
     assert c = 3;
-    c := inc_if(c, false, 3);
-    assert c = 3;
+    c := inc_if(c, true);
+    assert c = 4;
     wait;
   end process;
 
